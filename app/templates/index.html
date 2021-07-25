@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Height(Inches)</th>
+      <th scope="col">Weight(Pounds)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for heightweight in heightsAndWeights %}
+    <tr>
+      <td>{{heightweight.fldIndex}}</td>
+      <td>{{heightweight.fldHeight_Inches}}</td>
+      <td>{{heightweight.fldWeight_Pounds}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

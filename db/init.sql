@@ -2,9 +2,9 @@ CREATE DATABASE heightWeight;
 use heightWeight;
 
 CREATE TABLE IF NOT EXISTS tableHeightWeight (
-    `Index` INT,
-    `Height_Inches` NUMERIC(4, 2),
-    `Weight_Pounds` NUMERIC(6, 3)
+    `fldIndex` INT,
+    `fldHeight_Inches` NUMERIC(4, 2),
+    `fldWeight_Pounds` NUMERIC(6, 3)
 );
 INSERT INTO tableHeightWeight VALUES
     (1, 65.78, 112.99),
