@@ -32,7 +32,7 @@ def index():
     return render_template('index.html', title='Home', user=user, heightsAndWeights = heightWeight)
 
 @app.route('/api/heightWeight')
-def index() -> str:
+def heightsAndWeights() -> str:
     js = json.dumps(heightweight_import())
     resp = Response(js, status=200, mimetype='application/json')
     return resp
