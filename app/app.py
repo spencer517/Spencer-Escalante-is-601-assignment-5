@@ -65,8 +65,16 @@ def new_patient():
 def new_patient_insert():
     cursor = mysql.get_db().cursor()
     data = (request.form.get('fldIndex'), request.form.get('fldHeight_Inches'), request.form.get('fldWeight_Pounds'))
-    update_query = """INSERT into tableHeightWeight (fldIndex,fldHeight_Inches,fldWeight_Pounds) VALUES (%s, %s,%s)"""
-    cursor.execute(update_query, data)
+    new_patient_query = """INSERT into tableHeightWeight (fldIndex,fldHeight_Inches,fldWeight_Pounds) VALUES (%s, %s,%s)"""
+    cursor.execute(new_patient_query, data)
+    mysql.get_db().commit()
+    return redirect("/", code=302)
+
+@app.route('/delete/{{patient.id}}', methods=['POST'])
+def remove_patient(patient_id):
+    cursor = mysql.get_db().cursor()
+    delete_query = """DELETE FROM tableHeightWeight WHERE hw.id = %s """
+    cursor.execute(delete_query, patient_id)
     mysql.get_db().commit()
     return redirect("/", code=302)
 
