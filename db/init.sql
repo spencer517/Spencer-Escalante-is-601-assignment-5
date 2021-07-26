@@ -2,11 +2,13 @@ CREATE DATABASE heightWeight;
 use heightWeight;
 
 CREATE TABLE IF NOT EXISTS tableHeightWeight (
+    `id` int AUTO_INCREMENT,
     `fldIndex` INT,
     `fldHeight_Inches` NUMERIC(4, 2),
-    `fldWeight_Pounds` NUMERIC(6, 3)
+    `fldWeight_Pounds` NUMERIC(6, 3),
+    PRIMARY KEY (`id`)
 );
-INSERT INTO tableHeightWeight VALUES
+INSERT INTO tableHeightWeight (fldIndex, fldHeight_Inches, fldWeight_Pounds) VALUES
     (1, 65.78, 112.99),
     (2, 71.52, 136.49),
     (3, 69.40, 153.03),
