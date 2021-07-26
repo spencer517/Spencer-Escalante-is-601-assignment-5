@@ -57,5 +57,19 @@ def update_post(patient_id):
     mysql.get_db().commit()
     return redirect("/", code=302)
 
+@app.route('/patients/new', methods=['GET'])
+def new_patient():
+    return render_template('newpatient.html', title='New Patient')
+
+@app.route('/patients/new', methods=['POST'])
+def new_patient_insert():
+    cursor = mysql.get_db().cursor()
+    data = (request.form.get('fldIndex'), request.form.get('fldHeight_Inches'), request.form.get('fldWeight_Pounds'))
+    update_query = """INSERT into tableHeightWeight (fldIndex,fldHeight_Inches,fldWeight_Pounds) VALUES (%s, %s,%s)"""
+    cursor.execute(update_query, data)
+    mysql.get_db().commit()
+    return redirect("/", code=302)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
