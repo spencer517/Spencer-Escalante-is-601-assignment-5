@@ -70,11 +70,11 @@ def new_patient_insert():
     mysql.get_db().commit()
     return redirect("/", code=302)
 
-@app.route('/delete/{{patient.id}}', methods=['POST'])
+@app.route('/delete/<int:patient_id>', methods=['POST'])
 def remove_patient(patient_id):
     cursor = mysql.get_db().cursor()
-    delete_query = """DELETE FROM tableHeightWeight WHERE hw.id = %s """
-    cursor.execute(delete_query, patient_id)
+    delete_patient_query = """DELETE FROM tableHeightWeight WHERE id = %s """
+    cursor.execute(delete_patient_query, patient_id)
     mysql.get_db().commit()
     return redirect("/", code=302)
 
