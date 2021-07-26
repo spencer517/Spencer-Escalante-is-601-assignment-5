@@ -41,6 +41,21 @@ def rec_view(patient_id):
     result = cursor.fetchall()
     return render_template('view.html', title='Home', patient=result[0])
 
+@app.route('/edit/<int:patient_id>', methods=['GET'])
+def get_edit(patient_id):
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT * FROM tableHeightWeight WHERE id=%s', patient_id)
+    result = cursor.fetchall()
+    return render_template('view.html', title='Home', patient=result[0])
+
+@app.route('/edit/<int:patient_id>', methods=['POST'])
+def update_post(patient_id):
+    cursor = mysql.get_db().cursor()
+    data = (request.form.get('fldIndex'), request.form.get('fldHeight_Inches'), request.form.get('fldWeight_Pounds'), patient_id)
+    update_query = """UPDATE tableHeightWeight hw SET hw.fldIndex = %s, hw.fld_Team = %s, hw.fld_Position = %s  WHERE hw.id = %s """
+    cursor.execute(update_query, data)
+    mysql.get_db().commit()
+    return redirect("/", code=302)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
