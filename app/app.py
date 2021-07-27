@@ -25,15 +25,6 @@ def index():
     heightWeight = cursor.fetchall()
     return render_template('index.html', title='Home', user=user, heightsAndWeights = heightWeight)
 
-@app.route('/api/v1/heightWeight')
-def heightsAndWeights(patient_id) -> str:
-    cursor = mysql.get_db().cursor()
-    cursor.execute('SELECT * FROM tableHeightWeight WHERE id=%s', patient_id)
-    result = cursor.fetchall()
-    js = json.dumps(result)
-    resp = Response(js, status=200, mimetype='application/json')
-    return resp
-
 @app.route('/view/<int:patient_id>', methods=['GET'])
 def rec_view(patient_id):
     cursor = mysql.get_db().cursor()
@@ -78,6 +69,14 @@ def remove_patient(patient_id):
     mysql.get_db().commit()
     return redirect("/", code=302)
 
+@app.route('/api/v1/heightWeight')
+def browseHeightsAndWeights() -> str:
+    cursor = mysql.get_db().cursor()
+    cursor.execute('SELECT * FROM tableHeightWeight')
+    result = cursor.fetchall()
+    js = json.dumps(result)
+    resp = Response(js, status=200, mimetype='application/json')
+    return resp
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
