@@ -98,5 +98,16 @@ def add() -> str:
     resp = Response(status=201, mimetype='application/json')
     return resp
 
+@app.route('/api/v1/heightWeight/<int:patient_id>', methods=['PUT'])
+def edit(patient_id) -> str:
+    content = request.json
+    cursor = mysql.get_db().cursor()
+    patientData = (content['fldIndex'], content['fldHeight_Inches'], content['fldWeight_Pounds'], patient_id)
+    update_patient_query = """UPDATE tableHeightWeight hw SET hw.fldIndex = %s, hw.fldHeight_Inches = %s, hw.fldWeight_Pounds = %s  WHERE hw.id = %s """
+    cursor.execute(update_patient_query, patientData)
+    mysql.get_db().commit()
+    resp = Response(status=200, mimetype='application/json')
+    return resp
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
