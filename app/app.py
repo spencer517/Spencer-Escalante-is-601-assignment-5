@@ -109,5 +109,14 @@ def edit(patient_id) -> str:
     resp = Response(status=200, mimetype='application/json')
     return resp
 
+@app.route('/api/v1/heightWeight/<int:patient_id>', methods=['DELETE'])
+def delete(patient_id) -> str:
+    cursor = mysql.get_db().cursor()
+    delete_patient_query = """DELETE FROM tableHeightWeight WHERE id = %s """
+    cursor.execute(delete_patient_query, patient_id)
+    mysql.get_db().commit()
+    resp = Response(status=200, mimetype='application/json')
+    return resp
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
