@@ -87,5 +87,16 @@ def retrieve(patient_id) -> str:
     resp = Response(js, status=200, mimetype='application/json')
     return resp
 
+@app.route('/api/v1/heightWeight', methods=['POST'])
+def add() -> str:
+    content = request.json
+    cursor = mysql.get_db().cursor()
+    patientData = (content['fldIndex'], content['fldHeight_Inches'], content['fldWeight_Pounds'])
+    new_patient_query = """INSERT into tableHeightWeight (fldIndex,fldHeight_Inches,fldWeight_Pounds) VALUES (%s, %s,%s)"""
+    cursor.execute(new_patient_query, patientData)
+    mysql.get_db().commit()
+    resp = Response(status=201, mimetype='application/json')
+    return resp
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
